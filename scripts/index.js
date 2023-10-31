@@ -4,13 +4,14 @@
 
 // @todo: Функция создания карточки
 
-function addCards (card, deleteCard) {
+function createCard (card, deleteCard) {
     
     const cardTemplate = document.querySelector('#card-template').content;
     const cardElement = cardTemplate.querySelector('.places__item').cloneNode(true);
     const deleteButton = cardElement.querySelector('.card__delete-button');
 
     cardElement.querySelector('.card__image').src = card.link;
+    cardElement.querySelector('.card__image').alt = card.name;
     cardElement.querySelector('.card__title').textContent = card.name;
     deleteButton.addEventListener('click', deleteCard);
 
@@ -29,6 +30,6 @@ function deleteCard (event) {
 const cardList = document.querySelector('.places__list');
 
 initialCards.forEach(function (card) {
-    let cardElement = addCards(card, deleteCard);
+    const cardElement = createCard(card, deleteCard);
     cardList.append(cardElement);
 });
