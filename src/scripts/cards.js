@@ -1,4 +1,5 @@
-import {openModal, closeModal, closeEscape, openCardImage} from './modal.js'
+import {openModal, closeModal, closeEscape} from './modal.js'
+import {formNewPlace, inputNewCardName, inputNewCardUrl, cardList, openCardImage} from './index.js'
 
 export const initialCards = [
     {
@@ -59,30 +60,15 @@ export function deleteCard (event) {
 export function createNewCard(evt) {
   evt.preventDefault(); 
   const newCard = {};
-  const formNewPlace = document.querySelector('form[name="new-place"]');
-  const newCardName = document.querySelector('.popup__input_type_card-name');
-  const newCardPicture = document.querySelector('.popup__input_type_url');
-  newCard.link = newCardPicture.value;
-  newCard.name = newCardName.value;
+  newCard.link = inputNewCardUrl.value;
+  newCard.name = inputNewCardName.value;
   const cardElement = createCard(newCard, deleteCard, likeCard, openCardImage);
-  const cardList = document.querySelector('.places__list');
   cardList.prepend(cardElement);
-  closeModal();
+  const popupActive = evt.target.closest('.popup_is-opened');
+  closeModal(popupActive);
   formNewPlace.reset();
 };
 
-//функция редактирования данных профиля
-
-export function handleFormSubmit(evt) {
-  evt.preventDefault(); 
-  const profileTtitle = document.querySelector('.profile__title');
-  const profileDescription = document.querySelector('.profile__description');
-  const nameInput = document.querySelector('.popup__input_type_name');
-  const jobInput = document.querySelector('.popup__input_type_description');
-  profileTtitle.textContent = nameInput.value;
-  profileDescription.textContent = jobInput.value;
-  closeModal();
-}
 
 //функция постановки/снятия лайка
 

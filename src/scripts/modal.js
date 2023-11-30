@@ -7,29 +7,25 @@ export function openModal(element) {
 
 //функция закрытия модального окна
 
-export function closeModal() {
-    const openedPopup = document.querySelector('.popup_is-opened');
-    openedPopup.classList.remove('popup_is-opened');
+export function closeModal(element) {
+    element.classList.remove('popup_is-opened');
+    document.removeEventListener('keydown', closeEscape);
 }
 
 //функция закрытия модального окна нажатием на клавишу "Esc"
 
 export function closeEscape(evt) {
     if (evt.key === 'Escape') {
-        closeModal();
+        const popupActive = document.querySelector('.popup_is-opened');
+        closeModal(popupActive);
     };
-    document.removeEventListener('keydown', closeEscape);
 } 
 
-//функция открытия модального окна с картинкой карточки
+//функция закрытия модального окна по клику на оверлей
 
-export function openCardImage(evt) {
-    evt.preventDefault();
-    const imageOpen = document.querySelector('.popup_type_image');
-    const popupImage = document.querySelector('.popup__image');
-    const popupCaption = document.querySelector('.popup__caption');
-    popupImage.src = evt.target.src;
-    popupImage.alt = evt.target.alt;
-    popupCaption.textContent = evt.target.alt;
-    openModal(imageOpen);
+export function closeModalByOverlayClick(evt) {
+    if (evt.target.classList.contains('popup_is-opened')) {
+        const popupActive = evt.target.closest('.popup_is-opened');
+        closeModal(popupActive);
+    };
 }
