@@ -1,7 +1,7 @@
 import {initialCards} from './cards.js';
 import '../pages/index.css';
 import {openModal, closeModal, closeEscape, closeModalByOverlayClick} from './modal.js'
-import {createCard, deleteCard, createNewCard, likeCard} from './cards.js'
+import {createCard, deleteCard, likeCard} from './card.js'
 
 // @todo: DOM узлы
 
@@ -26,7 +26,7 @@ export const inputNewCardUrl = document.querySelector('.popup__input_type_url');
 //поиск DOM-элементов для функции открытия картинки карточки в модальном окне
 
 const popupCardImageType = document.querySelector('.popup_type_image');
-const popupCardImage = document.querySelector('.popup__image');
+const photoPopupCardImage = document.querySelector('.popup__image');
 const popupCardImageCaption = document.querySelector('.popup__caption');
 
 // @todo: Вывести карточки на страницу
@@ -44,16 +44,30 @@ function handleProfileFormSubmit(evt) {
     evt.preventDefault(); 
     profileTtitle.textContent = nameInput.value;
     profileDescription.textContent = jobInput.value;
-    const popupActive = evt.target.closest('.popup_is-opened');
+    const popupActive = document.querySelector('.popup_is-opened');
     closeModal(popupActive);
   }
 
-//функция открытия модального окна с картинкой карточки
+//функция создания новой карточки
+  
+function handleSubmitAddNewCard(evt) {
+    evt.preventDefault(); 
+    const newCard = {};
+    newCard.link = inputNewCardUrl.value;
+    newCard.name = inputNewCardName.value;
+    const cardElement = createCard(newCard, deleteCard, likeCard, openCardImage);
+    cardList.prepend(cardElement);
+    const popupActive = document.querySelector('.popup_is-opened');
+    closeModal(popupActive);
+    formNewPlace.reset();
+  };
+
+  //функция открытия модального окна с картинкой карточки
 
 export function openCardImage(evt) {
     evt.preventDefault();
-    popupCardImage.src = evt.target.src;
-    popupCardImage.alt = evt.target.alt;
+    photoPopupCardImage.src = evt.target.src;
+    photoPopupCardImage.alt = evt.target.alt;
     popupCardImageCaption.textContent = evt.target.alt;
     openModal(popupCardImageType);
 }
@@ -82,7 +96,7 @@ buttonProfileAdd.addEventListener('click', function(evt) {
 
 //вешаем обработчик событий на форму создания новой карточки для отслеживания события "submit"
 
-formNewPlace.addEventListener('submit', createNewCard);
+formNewPlace.addEventListener('submit', handleSubmitAddNewCard);
 
 //вешаем обработчик клика на кнопку закрытия модального окна
 
@@ -97,8 +111,4 @@ popupAll.forEach(function(item) {
     //закрытие активного модального окна по клику вне окна
 
     item.addEventListener('click', closeModalByOverlayClick);
-
-    //добавляем класс с аниманией плавного открытия модальных окон
-    
-    item.classList.add('popup_is-animated');
 });
