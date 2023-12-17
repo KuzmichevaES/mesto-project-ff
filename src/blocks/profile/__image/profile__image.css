@@ -7,6 +7,12 @@
   background-size: cover;
   background-position: center;
   margin: 0 29px 0 0;
+  position: relative;
+}
+
+.profile__image:hover .profile__image-edit {
+  width: 100%;
+  height: 100%;
 }
 
 @media screen and (max-width: 740px) {

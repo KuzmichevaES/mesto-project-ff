@@ -1,0 +1,13 @@
+.profile__image-edit {
+    background-image: url('/src/images/editAvatar.png');
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(0,0,0,0.8);
+}
+
