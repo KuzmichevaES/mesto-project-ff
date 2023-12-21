@@ -10,6 +10,16 @@ const config = {
         }
 }
 
+//функция проверки ответа сервера
+
+const getResponseData = (res) => {
+    if (res.ok) {
+        return res.json();
+      } else {
+        return Promise.reject(`Ошибка: ${res.status}`);
+      };
+}
+
 //функция получения данных о пользователе
 
 export const getCurrentUser = () => {
@@ -17,11 +27,7 @@ export const getCurrentUser = () => {
     headers: config.headers
     })
     .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      };
+        return getResponseData(res);
     })
 };
 
@@ -32,12 +38,8 @@ export const getAllCards = () => {
     headers: config.headers
     })
     .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      };
-    });
+      return getResponseData(res);
+    })
 };
 
 //функция для изменения данных профиля
@@ -52,19 +54,8 @@ export const updateUserData = (newData) => {
         })
     })
     .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        };
+        return getResponseData(res);
       })
-    .then((data) => {
-        profileTitle.textContent = data.name;
-        profileDescription.textContent = data.about;
-    })
-    .catch((err) => {
-        console.log(err);
-    });
 };
 
 //функция передачи данных о новой карточке на сервер
@@ -79,11 +70,7 @@ export const loadNewCardData = (fetchData) => {
           })
     })
     .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        };
+        return getResponseData(res);
     })
 };
 
@@ -95,11 +82,7 @@ export const deleteCardFromServer = (cardId) => {
       headers: config.headers
     })
     .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        };
+        return getResponseData(res);
     })
 };
 
@@ -111,11 +94,7 @@ export const addLikeToCard = (likedCardId) => {
       headers: config.headers
     })
     .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        };
+        return getResponseData(res);
     })
 };
 
@@ -127,18 +106,13 @@ export const deleteLikeFromCard = (likedCardId) => {
       headers: config.headers
     })
     .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(`Ошибка: ${res.status}`);
-        };
+        return getResponseData(res);
     })
 };
 
 //обновляем аватар профиля
 
 export const updateUserAvatar = (newData) => {
-    console.log(newData);
     return fetch(`${config.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: config.headers, 
@@ -147,16 +121,6 @@ export const updateUserAvatar = (newData) => {
           })
       })
       .then((res) => {
-          if (res.ok) {
-            return res.json();
-          } else {
-            return Promise.reject(`Ошибка: ${res.status}`);
-          };
+          return getResponseData(res);
         })
-      .then((data) => {
-        profileImage.style.backgroundImage = "url(" + data.avatar + ")";
-      })
-      .catch((err) => {
-        console.log(err);
-    });
   };

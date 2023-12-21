@@ -25,7 +25,6 @@ export function closeEscape(evt) {
 
 export function closeModalByOverlayClick(evt) {
     if (evt.target.classList.contains('popup_is-opened')) {
-        const popupActive = evt.target.closest('.popup_is-opened');
-        closeModal(popupActive);
+        closeModal(evt.target);
     };
 }

@@ -1,9 +1,6 @@
 export const enableValidation = (functionObject) => {
-    const formList = Array.from(document.querySelectorAll('.popup__form'));
+    const formList = Array.from(document.querySelectorAll(functionObject.formSelector));
     formList.forEach((formElement) => {
-      formElement.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-      });
       setEventListeners(formElement, functionObject);
     });
 }
@@ -27,6 +24,11 @@ export const clearValidation = (formElement, functionObject) => {
     inputList.forEach((inputElement) => {
         hideInputError(formElement, inputElement, functionObject);
     });
+}
+
+export const reloadValidation = (formElement, buttonElement, functionObject) => {
+  const inputList = Array.from(formElement.querySelectorAll(functionObject.inputSelector));
+  toggleButtonState(inputList, buttonElement, functionObject);
 }
 
 const checkInputValidity = (formElement, inputElement, functionObject) => {
